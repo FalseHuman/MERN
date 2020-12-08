@@ -1,5 +1,7 @@
 const {Router} = require('express')
 const {check, validationResult} = requre("express-validator")
+const jwt = require("jsonwebtoken")
+const config = require('config')
 const bcrypt = require('bcryptjs')
 const User = './models/user'
 const router = Router()
@@ -9,7 +11,7 @@ router.post(
     '/register', 
     [
         check('email', 'Некорректный email').isEmail(),
-        check('password', 'Минимальная длин 6 символов').isLenght({min:6})
+        check('password', 'Минимальная длин 6 символов').isLenght(optinons,{min: 6}) // del iptions
     ],
     async (req, res) =>{
     try{
@@ -58,7 +60,27 @@ router.post(
                     message: "Некорректные данные при входе в систему"
                 })
             }
-    
+            const {email, password} = req.body
+            const user = await User.findOne({email})
+            if (!user){
+                return res.status(400).json({
+                    message: "Пользователь не найден. Повторите попытку..."
+                })
+            }
+
+            const isMatch = await bcrypt.compare(password, user.password)
+
+            if (!isMatch){
+                return res.status(400).json({
+                    message: "Неверный пароль"
+                })
+            }
+             const token = jwt.sign(
+                 {userId: user.id},
+                 config.get("jwtSecret"),
+                 {expiresIn: '1h'}
+             )
+             res.json({token, userId: user.id})
         } catch (e){
             res.status(500).json({message: "Что-то пошло не так:(Попробуйте снова..."})
         }
