@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js"
+    "server": "nodemon app.js",
+    "frontend": "npm run start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\""
   },
   "keywords": [
     "mern",
@@ -23,6 +25,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.8.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.5"
+    "mongoose": "^5.11.5",
+    "require": "^2.4.20"
   }
 }

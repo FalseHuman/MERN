@@ -1,5 +1,5 @@
 const {Router} = require('express')
-const {check, validationResult} = requre("express-validator")
+const {check, validationResult} = require("express-validator")
 const jwt = require("jsonwebtoken")
 const config = require('config')
 const bcrypt = require('bcryptjs')
@@ -11,7 +11,7 @@ router.post(
     '/register', 
     [
         check('email', 'Некорректный email').isEmail(),
-        check('password', 'Минимальная длин 6 символов').isLenght(optinons,{min: 6}) // del iptions
+        check('password', 'Минимальная длин 6 символов').isLength({ min: 6 }) 
     ],
     async (req, res) =>{
     try{
@@ -47,7 +47,7 @@ router.post(
 router.post(
     '/login',
     [
-        check('email', 'Введите корректный email').normalizeEmail().isEmail(),
+        check('email', 'Введите корректный email').isEmail(),//.normalizeEmail().isEmail()
         check('password', 'Введите пароль').exists()
     ],
      async (req, res) =>{
