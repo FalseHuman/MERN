@@ -13,7 +13,7 @@ export const Navbar = () => {
         history.push("/")
     }
 
-
+ 
     return(
         <div className="navbar-fixed">
     <nav>
