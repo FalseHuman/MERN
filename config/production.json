@@ -2,5 +2,5 @@
     "port": 5000,
     "jwtSecret": "SexRinat",
     "mongoUri": "mongodb+srv://emil:Rinat19861@cluster0.2vrfs.mongodb.net/app?retryWrites=true&w=majority",
-    "baseUrl": "http://localhost:500"
+    "baseUrl": "http://localhost:5000"
 }
